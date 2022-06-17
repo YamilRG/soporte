@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "814422199743",
+    "project_id": "gafisoporte-a29a0",
+    "storage_bucket": "gafisoporte-a29a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814422199743:android:ea53d6b31f581dd115e50a",
+        "android_client_info": {
+          "package_name": "com.gafi.soporte"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814422199743-35g7ea0n2frljn24i6akmldi04mulh4f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGQBT70DhJzoVINgv-f_F-_pfLYvCh7xo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814422199743-35g7ea0n2frljn24i6akmldi04mulh4f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
