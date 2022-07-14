@@ -1,14 +1,10 @@
-import 'dart:ui';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
+/*import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:soporte/screens/HomePage.dart';
-import 'package:soporte/screens/reusable_widgets/reusable_widgets.dart';
+import 'package:soporte/screens/home/HomePage.dart';
+import 'package:soporte/widgets/reusable_widgets.dart';
 
 class LoginWidget extends StatefulWidget {
-  LoginWidget({Key? key}) : super(key: key);
+  const LoginWidget({Key? key}) : super(key: key);
 
   @override
   State<LoginWidget> createState() => _LoginWidgetState();
@@ -18,8 +14,8 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget _dialog(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-      title: Text("Fallo al Iniciar Sesión."),
-      content: Text("Verifica que los datos sean correctos."),
+      title: const Text("Fallo al Iniciar Sesión."),
+      content: const Text("Comprueba tus credenciales o verifica tu conexión."),
       actions: <Widget>[
         Column(
           children: [
@@ -30,7 +26,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(
+              child: const Text(
                 "Cerrar",
                 style: TextStyle(color: Colors.white),
               ),
@@ -69,96 +65,94 @@ class _LoginWidgetState extends State<LoginWidget> {
           email: email, password: password);
       user = userCredential.user;
     } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {}
+      if (e.code == "user-not-found") {
+        print("Usuario no encontrado");
+      }
     }
     return user;
   }
 
-  TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+
+  //  Build ---------------------------->
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
               image: NetworkImage(
                   "https://i1.wp.com/tubosylaminas.com/wp-content/uploads/2020/02/serv-corte-tubo.jpg?resize=600%2C600&ssl=1"),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               opacity: 0.8,
             )),
             child: SingleChildScrollView(
                 child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                  20, MediaQuery.of(context).size.height * 0.05, 20, 4.5),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 20),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    width: MediaQuery.of(context).size.width / 1,
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(height: 50),
-                        logoWidget("assets/images/logo.jpg", 240, 240),
-                        SizedBox(height: 90),
-                        reusableTextField2("Correo Electronico", Icons.email,
-                            false, _emailTextController),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        reusableTextField2("Contraseña", Icons.security, true,
-                            _passwordTextController),
-                        SizedBox(height: 197),
-                        Container(
-                            child: Container(
-                          width: 170,
-                          height: 40,
-                          child: RawMaterialButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.0)),
-                            fillColor: Color.fromARGB(255, 255, 0, 0),
-                            onPressed: () async {
-                              User? user = await LoginWithPassEmail(
-                                  email: _emailTextController.text,
-                                  password: _passwordTextController.text,
-                                  context: context);
-                              print(user);
-                              if (user != null) {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            paginaprincipal()));
-                              } else {
-                                _failed();
-                              }
-                            },
-                            child: Text(
-                              "Iniciar Sesion",
-                              style: TextStyle(color: Colors.white),
-                            ),
+              padding: const EdgeInsets.fromLTRB(20, 2, 20, 4),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      width: MediaQuery.of(context).size.width / 1,
+                      child: Column(
+                        children: <Widget>[
+                          const SizedBox(height: 50),
+                          logoWidget3("assets/images/logo.jpg", 240, 240),
+                          const SizedBox(height: 70),
+                          reusableTextField2("Correo Electronico", Icons.email,
+                              false, _emailTextController),
+                          const SizedBox(
+                            height: 20,
                           ),
-                        )),
-                        SizedBox(height: 8),
-                        Text("GAFI Servicios SA de CV"),
-                        SizedBox(height: 10),
-                      ],
+                          reusableTextField2("Contraseña", Icons.security, true,
+                              _passwordTextController),
+                          const SizedBox(height: 190),
+                          Container(
+                              child: Container(
+                            width: 170,
+                            height: 40,
+                            child: RawMaterialButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.0)),
+                              fillColor: const Color.fromARGB(255, 255, 0, 0),
+                              onPressed: () async {
+                                User? user = await LoginWithPassEmail(
+                                    email: _emailTextController.text,
+                                    password: _passwordTextController.text,
+                                    context: context);
+                                print(user);
+                                if (user != null) {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomeScreen()));
+                                } else {
+                                  _failed();
+                                }
+                              },
+                              child: const Text(
+                                "Iniciar Sesion",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          )),
+                          const SizedBox(height: 8),
+                          const Text("GAFI Servicios SA de CV"),
+                          const SizedBox(height: 10),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ))));
   }
 }
-
-Image logoWidget(String imageName, double tamano1, double tamano2) {
-  return Image.asset(
-    imageName,
-    fit: BoxFit.fitHeight,
-    width: tamano1,
-    height: tamano2,
-  );
-}
+*/
