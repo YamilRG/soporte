@@ -90,88 +90,94 @@ class Login_page_final_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-      children: <Widget>[
-        Container(
-          height: double.infinity,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(
-                      'https://i1.wp.com/tubosylaminas.com/wp-content/uploads/2020/02/serv-corte-tubo.jpg?resize=600%2C600&ssl=1'),
-                  fit: BoxFit.cover,
-                  opacity: 0.8)),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16.0)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: <Widget>[
-                          logoWidget3("assets/images/logo.jpg", 200, 200),
-                          const SizedBox(height: 60),
-                          reusableTextField2(
-                              'Escribe tu correo',
-                              "Correo Electronico",
-                              Icons.email,
-                              false,
-                              _emailTextController),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          reusableTextField2(
-                              'Escribe tu contraseña',
-                              "Contraseña",
-                              Icons.security,
-                              true,
-                              _passwordTextController),
-                          const SizedBox(height: 200),
-                          RawMaterialButton(
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 12),
-                                child: Text(
-                                  'Iniciar Sesión',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 16),
+        body: MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: Stack(
+        children: <Widget>[
+          Container(
+            height: double.infinity,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(
+                        'https://i1.wp.com/tubosylaminas.com/wp-content/uploads/2020/02/serv-corte-tubo.jpg'),
+                    fit: BoxFit.cover,
+                    opacity: 0.8)),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16.0)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          children: <Widget>[
+                            logoWidget3("assets/images/logo.jpg", 200, 200),
+                            const SizedBox(height: 60),
+                            reusableTextField2(
+                                'Escribe tu correo',
+                                "Correo Electronico",
+                                Icons.email,
+                                false,
+                                _emailTextController),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            reusableTextField2(
+                                'Escribe tu contraseña',
+                                "Contraseña",
+                                Icons.security,
+                                true,
+                                _passwordTextController),
+                            const SizedBox(height: 200),
+                            RawMaterialButton(
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 12),
+                                  child: Text(
+                                    'Iniciar Sesión',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 16),
+                                  ),
                                 ),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16.0)),
-                              fillColor: Colors.red,
-                              onPressed: () async {
-                                User? user = await LoginWithPassEmail(
-                                    email: _emailTextController.text,
-                                    password: _passwordTextController.text,
-                                    context: context);
-                                print(user);
-                                if (user != null) {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) => Home_Screen()));
-                                } else {
-                                  Platform.isAndroid
-                                      ? displayDialogAndroid(context)
-                                      : displayDialogIOS(context);
-                                }
-                              }),
-                        ],
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0)),
+                                fillColor: Colors.red,
+                                onPressed: () async {
+                                  User? user = await LoginWithPassEmail(
+                                      email: _emailTextController.text,
+                                      password: _passwordTextController.text,
+                                      context: context);
+                                  print(user);
+                                  if (user != null) {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Home_Screen()));
+                                  } else {
+                                    Platform.isAndroid
+                                        ? displayDialogAndroid(context)
+                                        : displayDialogIOS(context);
+                                  }
+                                }),
+                          ],
+                        ),
                       ),
-                    ),
-                    width: MediaQuery.of(context).size.width / 1,
-                  )
-                ],
+                      width: MediaQuery.of(context).size.width / 1,
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ));
   }
 }

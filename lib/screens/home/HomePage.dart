@@ -21,3 +21,22 @@ class Home_Screen extends StatelessWidget {
             itemCount: opciones.length));
   }
 }
+
+// Route _createRoute() {
+//   final opciones = AppRoutes.opciones;
+//   return PageRouteBuilder(
+//     pageBuilder: (context, animation, secondaryAnimation) => ,
+//     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//       const begin = Offset(0.0, 1.0);
+//       const end = Offset.zero;
+//       const curve = Curves.ease;
+
+//       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+//       return SlideTransition(
+//         position: animation.drive(tween),
+//         child: child,
+//       );
+//     },
+//   );
+// }

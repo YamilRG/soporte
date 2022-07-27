@@ -7,7 +7,7 @@ class Destruccion_Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Destruccion_Screen'),
+        child: Text('Destrucción_Screen'),
       ),
     );
   }
