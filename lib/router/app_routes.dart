@@ -11,17 +11,28 @@ class AppRoutes {
   // };
 
   static final opciones = <MenuRoutes>[
-    MenuRoutes(route: 'pc', name: 'Escritorio', screen: Pc_Escritorio_Screen()),
-    MenuRoutes(route: 'laptop', name: 'Laptop', screen: const Laptop_Screen()),
     MenuRoutes(
+        icon: Icons.desktop_windows_outlined,
+        route: 'pc',
+        name: 'Escritorio',
+        screen: Pc_Escritorio_Screen()),
+    MenuRoutes(
+        icon: Icons.laptop_rounded,
+        route: 'laptop',
+        name: 'Laptop',
+        screen: const Laptop_Screen()),
+    MenuRoutes(
+        icon: Icons.local_printshop_sharp,
         route: 'Impresoras',
         name: 'Impresoras',
         screen: const Impresora_Screen()),
     MenuRoutes(
+        icon: Icons.storage_rounded,
         route: 'Storage',
         name: 'Storage',
         screen: const Units_Storage_Screen()),
     MenuRoutes(
+        icon: Icons.desktop_access_disabled_rounded,
         route: 'Destrucción',
         name: 'Destrucción',
         screen: const Destruccion_Screen())
@@ -29,7 +40,7 @@ class AppRoutes {
   static Map<String, Widget Function(BuildContext)> getAppRoutes() {
     Map<String, Widget Function(BuildContext)> appRoutes = {};
     appRoutes.addAll({
-      'Home': (BuildContext context) => Login_page_final_Screen(),
+      'Home': (BuildContext context) => HomeScreen_final(),
     });
 
     for (final option in opciones) {
@@ -41,24 +52,6 @@ class AppRoutes {
   }
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    return MaterialPageRoute(builder: (context) => Home_Screen());
+    return MaterialPageRoute(builder: (context) => HomeScreen_final());
   }
-}
-
-Route _createRoute(Widget screen) {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => screen,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
 }

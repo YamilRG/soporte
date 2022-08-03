@@ -1,3 +1,6 @@
+export 'package:soporte/screens/home/home_screen.dart';
+export 'package:soporte/screens/prueba.dart';
+export 'package:soporte/screens/home/home_screen.dart';
 export 'package:soporte/screens/home/HomePage.dart';
 export 'package:soporte/screens/login/loginpage.dart';
 export 'package:soporte/screens/firebase/firebase.dart';

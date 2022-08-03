@@ -48,7 +48,7 @@ class Pc_Escritorio_Screen extends StatelessWidget {
                       child: Column(
                     children: [
                       const Image(
-                        image: AssetImage('assets/images/logoXme.png'),
+                        image: AssetImage('assets/logoXme.png'),
                         fit: BoxFit.cover,
                       ),
                       Text(
