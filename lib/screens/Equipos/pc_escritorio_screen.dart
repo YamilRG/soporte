@@ -2,8 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-final db = FirebaseFirestore.instance;
-String? value;
+final _db = FirebaseFirestore.instance;
+String? _value;
 
 class Pc_Escritorio_Screen extends StatelessWidget {
   Pc_Escritorio_Screen({Key? key}) : super(key: key);
@@ -30,7 +30,7 @@ class Pc_Escritorio_Screen extends StatelessWidget {
           centerTitle: true,
         ),
         body: StreamBuilder(
-          stream: db.collection('PC').snapshots(),
+          stream: _db.collection('PC').snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(
@@ -72,7 +72,7 @@ class Pc_Escritorio_Screen extends StatelessWidget {
                         size: 40,
                       ),
                       onPressed: () {
-                        db.collection('PC').doc(documentSnapshot.id).delete();
+                        _db.collection('PC').doc(documentSnapshot.id).delete();
                       },
                     ),
                   ),
@@ -103,7 +103,7 @@ showBottomSheet(
             ),
             onChanged: (String _val) {
               // Storing the value of the text entered in the variable value.
-              value = _val;
+              _value = _val;
             },
           ),
         ),
@@ -115,11 +115,11 @@ showBottomSheet(
             onPressed: () {
               // Check to see if isUpdate is true then update the value else add the value
               if (isUpdate) {
-                db.collection('PC').doc(documentSnapshot?.id).update({
-                  'Prueba': value,
+                _db.collection('PC').doc(documentSnapshot?.id).update({
+                  'Prueba': _value,
                 });
               } else {
-                db.collection('PC').add({'Prueba': value});
+                _db.collection('PC').add({'Prueba': _value});
               }
               Navigator.pop(context);
             },

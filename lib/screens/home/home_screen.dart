@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:soporte/models/menu_options.dart';
 import 'package:soporte/screens/screens.dart';
 import 'package:soporte/router/app_routes.dart';
+import 'package:soporte/theme/themes.dart';
 
 class HomeScreen_final extends StatelessWidget {
   final opciones = AppRoutes.opciones;
@@ -27,13 +28,9 @@ class HomeScreen_final extends StatelessWidget {
           ),
         ),
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          iconTheme: const IconThemeData(color: Colors.black),
+          backgroundColor: AppTheme.primary,
           centerTitle: true,
-          title: const Text(
-            'GAFI SOPORTE',
-            style: TextStyle(color: Colors.black),
-          ),
+          title: const Text('GAFI SOPORTE'),
         ),
         body: Padding(
           padding: const EdgeInsets.only(top: 10),
