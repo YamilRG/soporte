@@ -40,7 +40,7 @@ class AppRoutes {
   static Map<String, Widget Function(BuildContext)> getAppRoutes() {
     Map<String, Widget Function(BuildContext)> appRoutes = {};
     appRoutes.addAll({
-      'Home': (BuildContext context) => HomeScreen_final(),
+      'Home': (BuildContext context) => Firebase_screen(),
     });
 
     for (final option in opciones) {

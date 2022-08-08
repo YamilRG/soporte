@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:soporte/screens/screens.dart';
@@ -30,3 +33,15 @@ class _Firebase_screenState extends State<Firebase_screen> {
         ));
   }
 }
+
+// _navegaralHome() async {
+//   await Future.delayed(Duration(milliseconds: 2500), () {});
+
+//   FirebaseAuth.instance.authStateChanges().listen((User? user) {
+//     if(user == null) {
+//       Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Login_page_final_Screen()));
+//     } else {
+//       Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => HomeScreen_final()));
+//     }
+//   });
+// }

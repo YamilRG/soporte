@@ -1,12 +1,39 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:soporte/screens/home/HomePage.dart';
+import 'package:soporte/screens/screens.dart';
 import 'package:soporte/widgets/widgets.dart';
 
-class Login_page_final_Screen extends StatelessWidget {
+class Login_page_final_Screen extends StatefulWidget {
+  static Future<User?> LoginWithPassEmail(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        print("Usuario no encontrado");
+      }
+    }
+    return user;
+  }
+
+  Login_page_final_Screen({Key? key}) : super(key: key);
+
+  @override
+  State<Login_page_final_Screen> createState() =>
+      _Login_page_final_ScreenState();
+}
+
+class _Login_page_final_ScreenState extends State<Login_page_final_Screen> {
   void displayDialogIOS(BuildContext context) {
     showCupertinoDialog(
         context: context,
@@ -64,28 +91,21 @@ class Login_page_final_Screen extends StatelessWidget {
         });
   }
 
-  static Future<User?> LoginWithPassEmail(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-    try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      user = userCredential.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
-        print("Usuario no encontrado");
-      }
-    }
-    return user;
-  }
-
   final TextEditingController _passwordTextController = TextEditingController();
+
   final TextEditingController _emailTextController = TextEditingController();
 
-  Login_page_final_Screen({Key? key}) : super(key: key);
+  late StreamSubscription<User?> user;
+  void initState() {
+    super.initState();
+
+    user = FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user == null) {
+        print('El usuario no esta logeado');
+      } else
+        (print('El usuario esta logeado'));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,90 +113,68 @@ class Login_page_final_Screen extends StatelessWidget {
         body: MediaQuery.removePadding(
       context: context,
       removeTop: true,
-      child: Stack(
-        children: <Widget>[
-          Container(
-            height: double.infinity,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                        'https://i1.wp.com/tubosylaminas.com/wp-content/uploads/2020/02/serv-corte-tubo.jpg'),
-                    fit: BoxFit.cover,
-                    opacity: 0.8)),
-            child: SingleChildScrollView(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(40, 25, 40, 0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
                 child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16.0)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          children: <Widget>[
-                            logoWidget3("assets/images/logo.jpg", 200, 200),
-                            const SizedBox(height: 60),
-                            reusableTextField2(
-                                'Escribe tu correo',
-                                "Correo Electronico",
-                                Icons.email,
-                                false,
-                                _emailTextController),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            reusableTextField2(
-                                'Escribe tu contraseña',
-                                "Contraseña",
-                                Icons.security,
-                                true,
-                                _passwordTextController),
-                            const SizedBox(height: 200),
-                            RawMaterialButton(
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 12),
-                                  child: Text(
-                                    'Iniciar Sesión',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 16),
-                                  ),
-                                ),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16.0)),
-                                fillColor: Colors.red,
-                                onPressed: () async {
-                                  User? user = await LoginWithPassEmail(
-                                      email: _emailTextController.text,
-                                      password: _passwordTextController.text,
-                                      context: context);
-                                  print(user);
-                                  if (user != null) {
-                                    Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                Home_Screen()));
-                                  } else {
-                                    Platform.isAndroid
-                                        ? displayDialogAndroid(context)
-                                        : displayDialogIOS(context);
-                                  }
-                                }),
-                          ],
+                  children: <Widget>[
+                    logoWidget3("assets/logo1.png", 200, 200),
+                    const SizedBox(height: 80),
+                    reusableTextField2(
+                        'Escribe tu correo',
+                        "Correo Electronico",
+                        Icons.email,
+                        false,
+                        _emailTextController),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    reusableTextField2('Escribe tu contraseña', "Contraseña",
+                        Icons.security, true, _passwordTextController),
+                    const SizedBox(height: 180),
+                    RawMaterialButton(
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 12),
+                          child: Text(
+                            'Iniciar Sesión',
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
                         ),
-                      ),
-                      width: MediaQuery.of(context).size.width / 1,
-                    )
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0)),
+                        fillColor: Colors.red,
+                        onPressed: () async {
+                          User? user =
+                              await Login_page_final_Screen.LoginWithPassEmail(
+                                  email: _emailTextController.text,
+                                  password: _passwordTextController.text,
+                                  context: context);
+                          print(user);
+                          if (user != null) {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => Home_Screen()));
+                          } else {
+                            Platform.isAndroid
+                                ? displayDialogAndroid(context)
+                                : displayDialogIOS(context);
+                          }
+                        }),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 0),
+                      child: Text('Gafi'),
+                    ),
                   ],
                 ),
-              ),
-            ),
+              )
+            ],
           ),
-        ],
+        ),
       ),
     ));
   }
